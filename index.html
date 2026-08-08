@@ -66,11 +66,6 @@
           );
           if (iframe.contentWindow) {
             iframe.contentWindow.postMessage(event.data, "*");
-            iframe.contentWindow.addEventListener("message", (event) => {
-              console.log(
-                `GitHub hosted page Embed player iframe window message listener: Received message from origin ${event.origin}`,
-              );
-            });
           }
         });
       } else {
