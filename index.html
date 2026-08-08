@@ -61,9 +61,6 @@
 
         // 2. Forward postMessages received from extension window down to inner YouTube embed iframe
         window.addEventListener("message", (event) => {
-          console.log(
-            `GitHub hosted page: Received message from origin ${event.origin}`,
-          );
           if (iframe.contentWindow) {
             iframe.contentWindow.postMessage(event.data, "*");
           }
