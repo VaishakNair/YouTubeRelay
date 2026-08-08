@@ -49,16 +49,28 @@
 
         iframe.src = embedUrl;
         iframe.title = "YouTube video player";
-        iframe.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
-        iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+        iframe.setAttribute(
+          "referrerpolicy",
+          "strict-origin-when-cross-origin",
+        );
+        iframe.allow =
+          "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
         iframe.allowFullscreen = true;
 
         container.appendChild(iframe);
 
         // 2. Forward postMessages received from extension window down to inner YouTube embed iframe
         window.addEventListener("message", (event) => {
+          console.log(
+            `GitHub hosted page: Received message from origin ${event.origin}`,
+          );
           if (iframe.contentWindow) {
             iframe.contentWindow.postMessage(event.data, "*");
+            iframe.contentWindow.addEventListener("message", (event) => {
+              console.log(
+                `GitHub hosted page Embed player iframe window message listener: Received message from origin ${event.origin}`,
+              );
+            });
           }
         });
       } else {
